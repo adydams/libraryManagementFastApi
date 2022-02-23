@@ -5,9 +5,15 @@ from sqlalchemy import pool
 
 from alembic import context
 from app.models import Base
-
 from decouple import config as conf
+import sqlalchemy
 
+import psycopg2
+
+try:
+    from urllib import quote  as urlquote # Python 2.X
+except ImportError:
+    from urllib.parse import quote as urlquote # Python 3+
 
 DATABASE_USERNAME_Val = conf('DATABASE_USERNAME')
 DATABASE_HOSTNAME_Val = conf('DATABASE_HOSTNAME')
@@ -15,13 +21,13 @@ DATABASE_PASSWORD_Val = conf('DATABASE_PASSWORD')
 DATABASE_NAME_Val = conf('DATABASE_NAME')
 DATABASE_PORT_Val = conf('DATABASE_PORT')
 
-url_postfix_val = 'postgresql+psycopg2://postgres:beautiful@localhost:5432/libraryfastapi'
-
-
+url_postfix_val = f'postgresql://{DATABASE_USERNAME_Val}:{DATABASE_PASSWORD_Val}@{DATABASE_HOSTNAME_Val}:{DATABASE_PORT_Val}/{DATABASE_NAME_Val}' # % urlquote(DATABASE_PASSWORD_Val)
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+
 config = context.config
-config.set_main_option = ("sqlalchemy.url", url_postfix_val)
+config.set_main_option( "sqlalchemy.url",  url_postfix_val)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
