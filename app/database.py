@@ -7,7 +7,7 @@ from decouple import config
 
 #when passing the data directly
 #check in .env file
-DATABASE_USERNAME_Val = config('SQLALCHEMY_DATABASE_URL')
+DATABASE_USERNAME_Val = config('DATABASE_URL')
 
 engine = create_engine(DATABASE_USERNAME_Val)
 
