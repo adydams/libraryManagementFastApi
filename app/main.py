@@ -10,7 +10,7 @@ app = FastAPI()
 app.include_router(book.router)
 app.include_router(user.router)
 app.include_router(auth.router)
-app.include_router(blob.router)
+#app.include_router(blob.router)
 app.include_router(payscribe.router)
 app.include_router(geolocations.router)
 
